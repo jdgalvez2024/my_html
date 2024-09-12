@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+        <input type="number" id="guessInput" min="1" max="100">
+        <button id="guessButton" onclick="checkGuess()">Guess</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Generate a random number between 1 and 100
+        const secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guessInput').value);
+            attempts++;
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                setMessage('Please enter a valid number between 1 and 100.');
+                return;
+            }
+
+            if (guess === secretNumber) {
+                setMessage(`Congratulations! You guessed the number in ${attempts} attempts.`);
+                document.getElementById('guessButton').disabled = true;
+            } else if (guess < secretNumber) {
+                setMessage('Too low. Try again!');
+            } else {
+                setMessage('Too high. Try again!');
+            }
+        }
+
+        function setMessage(message) {
+            document.getElementById('message').textContent = message;
+        }
+    </script>
+</body>
+</html>
